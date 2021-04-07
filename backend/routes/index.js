@@ -45,38 +45,29 @@ router.post(APIs.updateDb, authMiddleware, async (req, res) => {
     // https://zwave-js.github.io/node-zwave-js/#/api/config-manager?id=getfulltextindex
     const deviceIndex = manager.getFulltextIndex()
 
-    const mIDs = {}
-    const pIDs = {}
+    const manufacturers = new Map()
+    const products = new Map()
 
     for (const device of deviceIndex) {
-      if (!mIDs[device.manufacturerId]) {
-        mIDs[device.manufacturerId] = {
-          hex: device.manufacturerId,
-          name: device.manufacturer
-        }
-      }
+      manufacturers.set(device.manufacturerId, {
+        manufacturerId: device.manufacturerId,
+        name: device.manufacturer
+      })
 
-      const id = `${device.manufacturerId}-${device.productId}`
-
-      if (!pIDs[id]) {
-        pIDs[id] = {
-          hex: device.productId,
-          name: device.label,
-          manufacturer: device.manufacturerId,
-          type: device.productType,
-          description: device.description
-        }
-      }
+      products.set(`${device.manufacturerId}-${device.productType}-${device.productId}`, {
+        manufacturer: device.manufacturerId,
+        productType: device.productType,
+        productId: device.productId,
+        label: device.label,
+        description: device.description
+      })
     }
-
-    const manufacturers = Object.keys(mIDs).map(m => mIDs[m])
-    const products = Object.keys(pIDs).map(p => pIDs[p])
 
     await db.drop('manufacturer')
     await db.drop('product')
 
-    await db.upsert({ collection: 'manufacturer', data: manufacturers, ignoreTime: true })
-    await db.upsert({ collection: 'product', data: products, ignoreTime: true })
+    await db.upsert({ collection: 'manufacturer', data: [...manufacturers.values()], ignoreTime: true })
+    await db.upsert({ collection: 'product', data: [...products.values()], ignoreTime: true })
 
     res.json({ success: true, result: 'done' })
   } catch (error) {

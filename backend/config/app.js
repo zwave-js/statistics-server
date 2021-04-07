@@ -12,10 +12,10 @@ module.exports = {
       },
       // add below custom collections if any
       manufacturer: {
-        index: [{ hex: 1 }, { unique: true }]
+        index: [{ manufacturerId: 1 }, { unique: true }]
       },
       product: {
-        index: [{ hex: 1, manufacturer: 1 }, { unique: true }]
+        index: [{ manufacturerId: 1, productType: 1, productId: 1 }, { unique: true }]
       }
     }
   },

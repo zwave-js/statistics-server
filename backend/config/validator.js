@@ -21,7 +21,8 @@ const schemas = {
           Joi.object({
             // ...have at least an "id" property
             id: Joi.string().required().min(1).max(100),
-            // ... have no date property, because that is used internally
+            // ... have no date or ts property, because that is used internally
+            ts: Joi.forbidden(),
             date: Joi.forbidden(),
             driverVersion: Joi.string().required().max(100),
             applicationName: Joi.string().required().max(100),

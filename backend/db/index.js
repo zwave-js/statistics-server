@@ -25,6 +25,9 @@ module.exports = {
       if (collections[collection].timeseries) {
         // If the collection should be a time series, add the current date
         const now = new Date()
+        doc.ts = new Date(Date.UTC(
+          now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()
+        ))
         doc.date = new Date(Date.UTC(
           now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()
         ))

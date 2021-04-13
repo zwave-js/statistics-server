@@ -46,6 +46,7 @@ docker exec -it \
 ```
 
 ## Proxy
+
 When behind a reverse proxy, you have to enable the `proxy` option in `config/app.js`. Make sure that your reverse proxy is configured correctly, or the rate limiter can be circumvented. Details can be found at: http://expressjs.com/en/guide/behind-proxies.html
 
 ## Backend

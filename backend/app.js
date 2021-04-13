@@ -7,7 +7,7 @@ const RateLimit = require('express-rate-limit')
 const MongoStore = require('rate-limit-mongo')
 const helmet = require('helmet')
 
-const { db, rateLimit } = require('./config/app')
+const { db, rateLimit, proxy } = require('./config/app')
 
 const limiter = new RateLimit({
   store: new MongoStore({
@@ -24,6 +24,8 @@ const limiter = new RateLimit({
 })
 
 const app = express()
+
+if (proxy) app.set('trust proxy', true)
 
 app.use(helmet())
 

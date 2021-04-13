@@ -28,5 +28,12 @@ module.exports = {
     maxRequests: parseInt(process.env.RATELIMIT) || 2, // mind that 1 request needs to be done for auth
     ttl: 60 * 1000 // 1 minute
   },
+  // When behind a reverse proxy, set this field to `true`, so the rate-limiter can see the user's external IP
+  // Make sure to configure the proxy correctly. Details can be found at: http://expressjs.com/en/guide/behind-proxies.html
+  // For nginx, the following config will do:
+  //   proxy_set_header X-Forwarded-For $remote_addr
+  //   proxy_set_header X-Forwarded-Host ""
+  //   proxy_set_header X-Forwarded-Proto ""
+  proxy: true,
   key: process.env.KEY
 }

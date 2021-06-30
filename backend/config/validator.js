@@ -27,6 +27,9 @@ const schemas = {
             driverVersion: Joi.string().required().max(100),
             applicationName: Joi.string().required().max(100),
             applicationVersion: Joi.string().required().max(100),
+            nodeVersion: Joi.string().optional().max(25),
+            os: Joi.string().optional().max(25),
+            arch: Joi.string().optional().max(25),
             devices: Joi.array()
               .required()
               .max(255)

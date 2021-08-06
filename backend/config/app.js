@@ -7,15 +7,22 @@ module.exports = {
     password: process.env.MONGO_PSW,
     collections: {
       statistics: {
-        index: [{ id: 1, date: 1 }, { unique: true }],
+        index: {
+          default: [{ id: 1, date: 1 }, { unique: true }],
+          'timestamp last 24h': [{ ts: 1, date: 1, id: 1 }]
+        },
         timeseries: true
       },
       // add below custom collections if any
       manufacturer: {
-        index: [{ manufacturerId: 1 }, { unique: true }]
+        index: {
+          default: [{ manufacturerId: 1 }, { unique: true }]
+        }
       },
       product: {
-        index: [{ manufacturerId: 1, productType: 1, productId: 1 }, { unique: true }]
+        index: {
+          default: [{ manufacturerId: 1, productType: 1, productId: 1 }, { unique: true }]
+        }
       }
     }
   },

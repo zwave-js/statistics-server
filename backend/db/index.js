@@ -26,7 +26,10 @@ function isObject (it) {
 module.exports = {
   upsert: async ({ collection = defaultCollection, data }) => {
     const bulk = client.db(options.db).collection(collection).initializeOrderedBulkOp()
-    const findQuery = Object.assign({}, collections[collection].index[0]) || {
+    const findIndexDefinition = isObject(collections[collection].index)
+      ? collections[collection].index.default[0]
+      : collections[collection].index[0]
+    const findQuery = Object.assign({}, findIndexDefinition) || {
       _id: null
     }
 

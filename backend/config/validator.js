@@ -38,7 +38,7 @@ const schemas = {
                   manufacturerId: Joi.string().required().regex(/^0x[0-9a-f]{4}$/).allow(''),
                   productType: Joi.string().required().regex(/^0x[0-9a-f]{4}$/).allow(''),
                   productId: Joi.string().required().regex(/^0x[0-9a-f]{4}$/).allow(''),
-                  firmwareVersion: Joi.string().required().regex(/^[0-9]{1,3}\.[0-9]{1,3}$/).allow('')
+                  firmwareVersion: Joi.string().required().regex(/^[0-9]{1,3}\.[0-9]{1,3}(\.[0-9]{1,3})?$/).allow('')
                 })
               )
           })
